@@ -1,3 +1,2 @@
 # Jarvis
-Jarvis Virtual Assistant 
-Hello
+Jarvis Virtual Assistant
