@@ -3,20 +3,11 @@ import speech_recognition as sr
 import datetime
 import os
 import webbrowser
-
-
-def search(query):
-    # query = " ".join(query.split())
-    # query = query.replace("wikipedia", "")
-    # url = f"https://en.wikipedia.org/wiki/{query}"
-    # webbrowser.open(url)
-    url = "https://www.google.com/search?q=" + query
-    webbrowser.open(url)
-
+import smtplib
 
 engine = pyttsx3.init('sapi5')
 voices = engine.getProperty('voices')
-# #print(voices[0].id)
+#print(voices[0].id)
 engine.setProperty('voice', voices[1].id)
 
 
@@ -38,6 +29,13 @@ def wishMe():
 
     speak("Jarvis at your service. Please tell me how may I help you")
 
+def search(query):
+    query = " ".join(query.split())
+    query = query.replace("wikipedia", "")
+    url = f"https://en.wikipedia.org/wiki/{query}"
+    webbrowser.open(url)
+    url = "https://www.google.com/search?q=" + query
+    webbrowser.open(url)
 
 def takeCommand():
     # It takes microphone input from the user and returns string output
@@ -68,15 +66,15 @@ if __name__ == "__main__":
         wikipedia = "wikipedia"
 
         # Logic for executing tasks based on query
-        if 'wikipedia' in query:
-            speak('Searching Wikipedia...')
-            query = query.replace("wikipedia", "")
-            results = wikipedia.summary(query, sentences=2)
-            speak("According to Wikipedia")
-            print(results)
-            speak(results)
+        # if 'wikipedia' in query:
+        #     speak('Searching Wikipedia...')
+        #     query = query.replace("wikipedia", "")
+        #     results = wikipedia.summary(query, sentences=2)
+        #     speak("According to Wikipedia")
+        #     print(results)
+        #     speak(results)
 
-        elif 'open youtube' in query:
+        if 'open youtube' in query:
             webbrowser.open("youtube.com")
 
         elif 'open google' in query:
@@ -99,13 +97,6 @@ if __name__ == "__main__":
             codePath = "C:\\Users\\Haris\\AppData\\Local\\Programs\\Microsoft VS Code\\Code.exe"
             os.startfile(codePath)
 
-        elif 'search' in query:
-            search(query)
-
-        elif 'bye' in query:
-            speak("Goodbye Sir, have a nice day")
-            exit()
-
         elif 'send email' in query:
             try:
                  speak("What should I say?")
@@ -118,3 +109,26 @@ if __name__ == "__main__":
             except Exception as e:
                 print(e)
                 speak("Sorry Sir. I am not able to send this email")
+
+        elif 'search' in query:
+            search(query)
+
+        elif 'bye' in query:
+            speak("Goodbye Sir, have a nice day")
+            exit()
+
+def sendEmail(to, content):
+    server = smtplib.SMTP('smtp.gmail.com', 587)
+    server.ehlo()
+    server.starttls()
+    server.login('akashsq352@gmail.com', 'akash@123')
+    server.sendmail('username', to, content)
+    server.close()
+
+#Send message on whatsapp
+def sendMessage(to, content):
+    client = Client("+917006888888")
+    client.send_message(to, content)
+    print("Message sent!")
+    speak("Message sent!")
+
