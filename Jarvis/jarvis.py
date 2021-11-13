@@ -4,25 +4,13 @@ import datetime
 import os
 import webbrowser
 
-
-# could not find pyaudio
-# def recordAudio():
-#     # Record Audio
-#     r = sr.Recognizer()
-#     with sr.Microphone() as source:
-#         print("Listening...")
-#         audio = r.listen(source)
-
 engine = pyttsx3.init('sapi5')
 voices = engine.getProperty('voices')
-#print(voices[0].id)
 engine.setProperty('voice', voices[1].id)
-
 
 def speak(audio):
     engine.say(audio)
     engine.runAndWait()
-
 
 def wishMe():
     hour = int(datetime.datetime.now().hour)
@@ -64,22 +52,24 @@ def search(query):
     url = "https://www.google.com/search?q=" + query
     webbrowser.open(url)
 
-
 if __name__ == "__main__":
     wishMe()
-    while True:
-        # if 1:
-        query = recordAudio().lower()
-        # Logic for executing tasks based on query
-        if 'wikipedia' in query:
-            speak('Searching Wikipedia...')
-            query = query.replace("wikipedia", "")
-            results = wikipedia.summary(query, sentences=2)
-            speak("According to Wikipedia")
-            print(results)
-            speak(results)
 
-        elif 'open youtube' in query:
+    while True:
+        query = recordAudio()
+        query = query.lower()
+        
+        # Logic for executing tasks based on query
+
+        # if 'wikipedia' in query:
+        #     speak('Searching Wikipedia...')
+        #     query = query.replace("wikipedia", "")
+        #     results = wikipedia.summary(query, sentences=2)
+        #     speak("According to Wikipedia")
+        #     print(results)
+        #     speak(results)
+
+        if 'open youtube' in query:
             webbrowser.open("youtube.com")
 
         elif 'open google' in query:
