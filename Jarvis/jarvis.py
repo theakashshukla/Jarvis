@@ -1,84 +1,116 @@
 import pyttsx3
 import speech_recognition as sr
 import datetime
-import wikipedia
-import webbrowser
 import os
+import webbrowser
+
+
+def search(query):
+    # query = " ".join(query.split())
+    # query = query.replace("wikipedia", "")
+    # url = f"https://en.wikipedia.org/wiki/{query}"
+    # webbrowser.open(url)
+    url = "https://www.google.com/search?q=" + query
+    webbrowser.open(url)
+
 
 engine = pyttsx3.init('sapi5')
 voices = engine.getProperty('voices')
-#print(voices[0].id)
-engine.setProperty('voice',voices[0].id)
+# #print(voices[0].id)
+engine.setProperty('voice', voices[1].id)
+
 
 def speak(audio):
     engine.say(audio)
-    engine.runAndWait()  
+    engine.runAndWait()
 
-def wishMe(): 
+
+def wishMe():
     hour = int(datetime.datetime.now().hour)
-    if hour>=0 and hour<12:
-         speak("Good morning!")
+    if hour >= 0 and hour < 12:
+        speak("Good Morning!")
 
-    elif hour>=12 and hour<18:
-        speak("Good afternoon!")
+    elif hour >= 12 and hour < 18:
+        speak("Good Afternoon!")
 
     else:
-        speak("Good evening!")
-    speak("Hello Akash, I am jarvis. How May I help you.")
+        speak("Good Evening!")
 
-def takecommand():
+    speak("Jarvis at your service. Please tell me how may I help you")
+
+
+def takeCommand():
+    # It takes microphone input from the user and returns string output
+
     r = sr.Recognizer()
     with sr.Microphone() as source:
-        print("listening....")
+        print("Listening...")
         r.pause_threshold = 1
         audio = r.listen(source)
+
     try:
         print("Recognizing...")
-        query = r.recognize_google(audio, language="en-in")
-        print(f"user said: {query}\n")
+        query = r.recognize_google(audio, language='en-in')
+        print(f"User said: {query}\n")
 
     except Exception as e:
-           #print(e)
-           print("say that again plz...")  
-           return "None" 
-    return query     
+        # print(e)
+        print("Say that again please...")
+        return "None"
+    return query
 
-if __name__ == "__main__": 
+
+if __name__ == "__main__":
     wishMe()
-    #while True: 
-    if 1:
-        query = takecommand().lower()
+    while True:
+        # if 1:
+        query = takeCommand().lower()
+        wikipedia = "wikipedia"
 
-    #Logic for executing tasks based on query
-    if 'wikipedia' in query:
-        speak('searching wikipedia..')
-        query = query.replace("wikipedia","")
-        results =wikipedia.summary(query, sentences=2)
-        speak("According to wikipedia")
-        print(results)
-        speak(results)
+        # Logic for executing tasks based on query
+        if 'wikipedia' in query:
+            speak('Searching Wikipedia...')
+            query = query.replace("wikipedia", "")
+            results = wikipedia.summary(query, sentences=2)
+            speak("According to Wikipedia")
+            print(results)
+            speak(results)
 
-    elif 'open youtube' in query:
-        webbrowser.open("youtube.com")
+        elif 'open youtube' in query:
+            webbrowser.open("youtube.com")
 
-    elif 'open google' in query:
-        webbrowser.open("google.com")
+        elif 'open google' in query:
+            webbrowser.open("google.com")
 
-    elif 'open terasoft.tech' in query:
-        webbrowser.open("terasoft.tech")
+        elif 'open gmail' in query:
+            webbrowser.open("gmail.com")
 
-    elif 'open stackoverflow' in query:
-        webbrowser.open("stackoverflow.com")
+        elif 'play music' in query:
+            music_dir = 'D:\\Non Critical\\songs\\Favorite Songs2'
+            songs = os.listdir(music_dir)
+            print(songs)
+            os.startfile(os.path.join(music_dir, songs[0]))
 
-    elif 'play music' in query:
-        music_dir = 'H:\\Video\\punjabi'
-        songs = os.listdir(music_dir)
-        print(songs)
-        os.startfile(os.path.join(music_dir, songs[0])) 
+        elif 'the time' in query:
+             strTime = datetime.datetime.now().strftime("%H:%M:%S")
+             speak(f"Sir, the time is {strTime}")
 
-    elif 'the time' in query:
-        strTime = datetime.datetime.now().strftime("%H:%M:%S")
-        speak(f"sir,The time is now{strTime}")
+        elif 'open code' in query:
+            codePath = "C:\\Users\\Haris\\AppData\\Local\\Programs\\Microsoft VS Code\\Code.exe"
+            os.startfile(codePath)
 
-    elif 'who are you' in query:
-        speak(f"sir, i am jarvis")
+        elif 'search' in query:
+            search(query)
+
+        elif 'bye' in query:
+            speak("Goodbye Sir, have a nice day")
+            exit()
+
+        elif 'send email' in query:
+            try:
+                speak("What should I say?")
+                content = takeCommand()
+                speak("Whom should I send this to?")
+                to = takeCommand()
+                sendEmail(to, content)
+            speak("Email has been sent!")
