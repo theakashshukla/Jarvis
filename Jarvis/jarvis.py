@@ -108,9 +108,13 @@ if __name__ == "__main__":
 
         elif 'send email' in query:
             try:
-                speak("What should I say?")
-                content = takeCommand()
-                speak("Whom should I send this to?")
-                to = takeCommand()
-                sendEmail(to, content)
-            speak("Email has been sent!")
+                 speak("What should I say?")
+                 content = takeCommand()
+                 speak("Whom should I send this to?")
+                 to = takeCommand()
+                 sendEmail(to, content)
+                 speak("Email has been sent!")
+
+            except Exception as e:
+                print(e)
+                speak("Sorry Sir. I am not able to send this email")
