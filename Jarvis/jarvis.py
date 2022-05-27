@@ -1,6 +1,7 @@
 import pyttsx3
 import speech_recognition as sr
 import datetime
+import pyaudio
 import os
 import webbrowser
 
@@ -8,9 +9,11 @@ engine = pyttsx3.init('sapi5')
 voices = engine.getProperty('voices')
 engine.setProperty('voice', voices[1].id)
 
+
 def speak(audio):
     engine.say(audio)
     engine.runAndWait()
+
 
 def wishMe():
     hour = int(datetime.datetime.now().hour)
@@ -24,6 +27,7 @@ def wishMe():
         speak("Good Evening!")
 
     speak("Jarvis at your service. Please tell me how may I help you")
+
 
 def recordAudio():
     # It takes microphone input from the user and returns string output
@@ -44,6 +48,7 @@ def recordAudio():
         return "None"
     return query
 
+
 def search(query):
     query = " ".join(query.split())
     query = query.replace("wikipedia", "")
@@ -52,13 +57,14 @@ def search(query):
     url = "https://www.google.com/search?q=" + query
     webbrowser.open(url)
 
+
 if __name__ == "__main__":
     wishMe()
 
     while True:
         query = recordAudio()
         query = query.lower()
-        
+
         # Logic for executing tasks based on query
 
         # if 'wikipedia' in query:
@@ -85,8 +91,8 @@ if __name__ == "__main__":
             os.startfile(os.path.join(music_dir, songs[0]))
 
         elif 'the time' in query:
-             strTime = datetime.datetime.now().strftime("%H:%M:%S")
-             speak(f"Sir, the time is {strTime}")
+            strTime = datetime.datetime.now().strftime("%H:%M:%S")
+            speak(f"Sir, the time is {strTime}")
 
         elif 'open code' in query:
             codePath = "C:\\Users\\Haris\\AppData\\Local\\Programs\\Microsoft VS Code\\Code.exe"
@@ -98,4 +104,3 @@ if __name__ == "__main__":
         elif 'bye' in query:
             speak("Goodbye Sir, have a nice day")
             exit()
-
