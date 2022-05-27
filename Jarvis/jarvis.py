@@ -8,11 +8,9 @@ engine = pyttsx3.init('sapi5')
 voices = engine.getProperty('voices')
 engine.setProperty('voice', voices[1].id)
 
-
 def speak(audio):
     engine.say(audio)
     engine.runAndWait()
-
 
 def wishMe():
     hour = int(datetime.datetime.now().hour)
@@ -26,7 +24,6 @@ def wishMe():
         speak("Good Evening!")
 
     speak("Jarvis at your service. Please tell me how may I help you")
-
 
 def recordAudio():
     # It takes microphone input from the user and returns string output
@@ -47,7 +44,6 @@ def recordAudio():
         return "None"
     return query
 
-
 def search(query):
     query = " ".join(query.split())
     query = query.replace("wikipedia", "")
@@ -55,7 +51,6 @@ def search(query):
     webbrowser.open(url)
     url = "https://www.google.com/search?q=" + query
     webbrowser.open(url)
-
 
 if __name__ == "__main__":
     wishMe()
