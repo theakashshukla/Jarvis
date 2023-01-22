@@ -5,6 +5,7 @@ import os
 import webbrowser
 import pyaudio
 
+
 engine = pyttsx3.init('sapi5')
 voices = engine.getProperty('voices')
 engine.setProperty('voice', voices[1].id)
@@ -70,32 +71,32 @@ if __name__ == "__main__":
         #     print(results)
         #     speak(results)
 
-        if 'open youtube' in query:
+    if 'open youtube' in query:
             webbrowser.open("youtube.com")
 
-        elif 'open google' in query:
+    elif 'open google' in query:
             webbrowser.open("google.com")
 
-        elif 'open gmail' in query:
+    elif 'open gmail' in query:
             webbrowser.open("gmail.com")
 
-        elif 'play music' in query:
+    elif 'play music' in query:
             music_dir = 'D:\\Non Critical\\songs\\Favorite Songs2'
             songs = os.listdir(music_dir)
             print(songs)
             os.startfile(os.path.join(music_dir, songs[0]))
 
-        elif 'the time' in query:
+    elif 'the time' in query:
             strTime = datetime.datetime.now().strftime("%H:%M:%S")
             speak(f"Sir, the time is {strTime}")
 
-        elif 'open code' in query:
+    elif 'open code' in query:
             codePath = "C:\\Users\\Haris\\AppData\\Local\\Programs\\Microsoft VS Code\\Code.exe"
             os.startfile(codePath)
 
-        elif 'search' in query:
+    elif 'search' in query:
             search(query)
 
-        elif 'bye' in query:
+    elif 'bye' in query:
             speak("Goodbye Sir, have a nice day")
             exit()

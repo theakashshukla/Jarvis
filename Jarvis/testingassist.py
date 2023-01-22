@@ -5,6 +5,7 @@ from gtts import gTTS # google text to speech
 import os # to save/open files
 import wolframalpha # to calculate strings into formula
 from selenium import webdriver # to control browser operations
+import pyaudio 
 
 num = 1
 def assistant_speaks(output):
@@ -17,7 +18,7 @@ def assistant_speaks(output):
 
 	toSpeak = gTTS(text = output, lang ='en', slow = False)
 	# saving the audio file given by google text to speech
-	file = str(num)+".mp3
+	file = str(num)+".mp3"
 	toSpeak.save(file)
 	
 	# playsound package is used to play the same file.
@@ -201,6 +202,5 @@ def open_application(input):
 		return
 
 	else:
-
 		assistant_speaks("Application not available")
 		return
